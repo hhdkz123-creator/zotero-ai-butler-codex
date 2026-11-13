@@ -13,7 +13,7 @@
 ## 版本信息
 
 - 插件版本：`5.1.2-beta.1.codex.1`
-- 拟发布文件：`zotero-ai-butler-codex-5.1.2-beta.1.codex.1.xpi`
+- 拟发布文件：`zotero-ai-butler-codex-5.1.2-beta.1.codex.1-no-upstream-update.xpi`
 - 插件清单所声明的 Zotero 版本：7.0.0 至 10.x
 - 默认本地适配服务地址：`http://127.0.0.1:23119`
 - 原项目：[steven-jianhao-li/zotero-AI-Butler](https://github.com/steven-jianhao-li/zotero-AI-Butler)
@@ -33,12 +33,12 @@
 计划发布文件的 SHA-256：
 
 ```text
-8a46fdf676aa7d4c573fd1a0baded4811074718a229081ccc2267a90c8f90cdb
+dc4377ca4c5babeb168ff4959187b65832184a2a8d4e1c18a92b3c274c94a0a5
 ```
 
 ## 重要注意事项
 
-- 该非官方版本的清单仍指向**原项目的自动更新地址**，可能在检查更新时被原项目版本覆盖；发布前应评估并修正该行为。
+- 原始测试 XPI 指向**原项目的自动更新地址**，可能造成覆盖。准备发布的候选安装包已移除该入口；后处理过程见 [scripts/strip_upstream_update.py](scripts/strip_upstream_update.py)。该候选包尚待安装实测，发布前应确认源码与构建过程可复现。
 - 本仓库不提供 OpenAI API 额度，也不保证 ChatGPT/Codex 订阅登录能力在所有环境中持续可用。
 - 不应在仓库中提交 API 密钥、OAuth 凭证、访问令牌、个人文献或本地授权配置。
 
