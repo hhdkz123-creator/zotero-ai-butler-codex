@@ -1,29 +1,49 @@
-# v5.1.2-beta.1.codex.1 — 预发布说明（草稿）
+# Zotero AI Butler Codex 适配版 v5.1.2-beta.1.codex.1
 
-**此文件是发布说明草稿，仓库尚未发布可下载的 GitHub Release。**
+**发布状态：** [GitHub Pre-release 已公开发布](https://github.com/hhdkz123-creator/zotero-ai-butler-codex/releases/tag/v5.1.2-beta.1.codex.1)（Beta 测试版）。
 
-Zotero AI Butler 的非官方 Codex 适配版。
+这是基于 [Zotero AI Butler](https://github.com/steven-jianhao-li/zotero-AI-Butler) 的非官方 Codex 适配版本。
 
-## 主要信息
+## 功能与说明
 
-- 插件清单版本：`5.1.2-beta.1.codex.1`
-- 包含 Codex 接口及登录相关逻辑，依赖本地 Codex 适配服务；插件安装包本身**不包含**适配服务。
-- 本地服务默认地址：`http://127.0.0.1:23119`
-- 清单声明支持 Zotero 7.0.0 至 10.x，尚未完成跨设备验证。
-- 原始测试 XPI 保留了上游更新地址；本次候选包已按 [后处理脚本](scripts/strip_upstream_update.py) 移除。仍需在 Zotero 中实测安装与后续更新行为。
+- 通过本机桥接服务连接 ChatGPT/Codex，提供 Codex 登录状态检查、模型列表获取和纯文本连接测试等功能。
+- 保留上游 Zotero AI Butler 的文献阅读与辅助分析功能。
+- 本版 XPI 移除了原项目的自动更新地址，以降低被上游版本覆盖的风险；尚未完成实际更新行为测试。
+- 本 XPI **不包含本地桥接服务**，使用 Codex 功能须单独安装并运行。
 
-## 安装方式（正式发布后）
+## 发布附件
 
-从本仓库 Releases 下载 `zotero-ai-butler-codex-5.1.2-beta.1.codex.1-no-upstream-update.xpi`，使用 Zotero「工具」→「插件」安装。使用 Codex 功能前需安装可信的兼容本地适配服务并完成授权。
+| 文件 | 用途 |
+| --- | --- |
+| [AI-Butler-Codex-fixed.xpi](https://github.com/hhdkz123-creator/zotero-ai-butler-codex/releases/download/v5.1.2-beta.1.codex.1/AI-Butler-Codex-fixed.xpi) | 插件安装包 |
+| [zotero-ai-butler-codex-source-v5.1.2-beta.1.codex.1.zip](https://github.com/hhdkz123-creator/zotero-ai-butler-codex/releases/download/v5.1.2-beta.1.codex.1/zotero-ai-butler-codex-source-v5.1.2-beta.1.codex.1.zip) | 修改版插件源码归档 |
+| [zotero-codex-bridge-source.zip](https://github.com/hhdkz123-creator/zotero-ai-butler-codex/releases/download/v5.1.2-beta.1.codex.1/zotero-codex-bridge-source.zip) | 配套桥接服务源码归档 |
 
-## 安装包 SHA-256
+## 安装和兼容性
+
+从 Release 下载 XPI，在 Zotero「工具」→「插件」中安装。按 [安装指南](docs/INSTALLATION.md) 获取并启动可信的桥接服务、完成登录与连接测试。
+
+安装包清单声明适配 Zotero 7.0.0–10.x；尚未完成跨设备、跨版本验证。使用前建议备份 Zotero 数据。
+
+## SHA-256
 
 ```text
+AI-Butler-Codex-fixed.xpi
 dc4377ca4c5babeb168ff4959187b65832184a2a8d4e1c18a92b3c274c94a0a5
+
+zotero-ai-butler-codex-source-v5.1.2-beta.1.codex.1.zip
+665360447c1997746efc7f52b797f01729f68338fd6c935fb29c8b9f140b2666
+
+zotero-codex-bridge-source.zip
+ac47d8506d82feda83643023b53260c4758a9622e0a7af01de1788d73f661d09
 ```
 
-## 版权与源码
+## 已知待核查事项
 
-本项目基于 [steven-jianhao-li/zotero-AI-Butler](https://github.com/steven-jianhao-li/zotero-AI-Butler) 修改，原项目依据 AGPL-3.0 许可。**公开分发修改版安装包前，请先提供该修改版的完整对应源代码、构建所需文件、原版权许可声明及修改说明。**
+- 完整检查两个源码归档内的文件、凭证及第三方依赖；核实与 XPI 的源码对应关系以及可复现构建。
+- 在干净的 Zotero 安装环境中测试 XPI、桥接服务、模型连接、更新行为。
+- 以上文件已在 GitHub 提供下载，不等于已通过代码安全审计。
 
-请勿提交私有 API Key、OAuth 凭证、个人授权记录。非官方发布，不代表原作者认可或维护。
+## 开源与免责声明
+
+本修改版本应遵循上游项目 [AGPL-3.0](LICENSE) 及桥接服务可能涉及的其他许可证要求。请勿向公共仓库提交 API Key、OAuth 凭证或配对令牌。非官方修改版，上游作者不承担本修改版的维护责任。
