@@ -1,60 +1,76 @@
-# 安装与配置指南
+# 安装与配置指南（Beta 预发布版）
 
-> 本仓库的 Release 尚未正式发布，以下步骤适用于取得完整安装包与可信桥接服务源码之后。此插件为非官方修改版。
+> 当前版本 [v5.1.2-beta.1.codex.1](https://github.com/hhdkz123-creator/zotero-ai-butler-codex/releases/tag/v5.1.2-beta.1.codex.1) **已公开发布**，但尚未完成跨设备完整安装测试。请先备份 Zotero 数据，核查下载的源码与软件安全性。本项目为非官方修改版。
+
+## 下载文件
+
+| 文件 | 作用 | 下载 |
+| --- | --- | --- |
+| `AI-Butler-Codex-fixed.xpi` | Zotero 插件 | [下载 XPI](https://github.com/hhdkz123-creator/zotero-ai-butler-codex/releases/download/v5.1.2-beta.1.codex.1/AI-Butler-Codex-fixed.xpi) |
+| `zotero-codex-bridge-source.zip` | 运行 Codex 功能所需本地桥接服务的源码 | [下载桥接源码](https://github.com/hhdkz123-creator/zotero-ai-butler-codex/releases/download/v5.1.2-beta.1.codex.1/zotero-codex-bridge-source.zip) |
+| `zotero-ai-butler-codex-source-v5.1.2-beta.1.codex.1.zip` | 修改版插件源码归档，不用于日常安装 | [下载插件源码](https://github.com/hhdkz123-creator/zotero-ai-butler-codex/releases/download/v5.1.2-beta.1.codex.1/zotero-ai-butler-codex-source-v5.1.2-beta.1.codex.1.zip) |
+
+> GitHub 自动生成的 `Source code (zip)`、`Source code (tar.gz)` 仅包含仓库当前标签的文件，不是上表中单独上传的完整插件源码归档。XPI 本身也**不包含**桥接服务。
 
 ## 运行环境
 
-- Zotero：XPI 清单声明支持 7.0.0–10.x（未经过所有版本验证）。
-- macOS（目前已有一次本地测试成功；其他平台暂未核验）。
-- Node.js：用于运行本地 Codex 适配服务；具体版本要求以该适配服务源码为准。
-- 有权限使用 Codex 的 ChatGPT 账号；本项目不提供订阅或 API 额度。
+- Zotero：插件清单声明支持 7.0.0–10.x，但未对所有版本进行验证。
+- 操作系统：文档以下以 macOS 为例；其他平台需要分别测试。
+- Node.js：本地桥接服务需要 Node.js，具体所需版本和依赖以桥接源码内的说明或 `package.json` 为准。
+- ChatGPT/Codex 账号：需自行具备可用权限和额度，本项目不提供订阅及 API 额度。
 
-## 安装插件
+## 安装 Zotero 插件
 
-1. 备份 Zotero 数据，退出插件管理窗口。
-2. 从项目 Releases 下载 `zotero-ai-butler-codex-5.1.2-beta.1.codex.1-no-upstream-update.xpi`。
-3. 打开 Zotero「工具」→「插件」，将 XPI 拖入窗口并确认安装；如提示则重启。
+1. 先备份 Zotero 数据及配置。
+2. 下载 `AI-Butler-Codex-fixed.xpi`。不要将其误认为 ZIP 源码包。
+3. 打开 Zotero，进入「工具」→「插件」，把 XPI 文件拖进插件窗口并确认安装；如有提示则重启。
+4. 插件显示正常后，再配置本地 Codex 桥接服务。
 
-## 启动本地适配服务
+## 检查并启动本地桥接服务（macOS）
 
-必须先获取**与此 XPI 版本匹配**的 `zotero-codex-bridge` 源码，不要执行来源不明的服务程序。
-
-在终端进入适配服务源代码所在目录（该目录应包含 `server.mjs`），执行：
+1. 下载 `zotero-codex-bridge-source.zip`，解压至自己选择的目录。
+2. **运行前检查**解压内容和可能包含的依赖安装脚本。不要执行不明来源的命令，也不要分享个人密钥或令牌。
+3. 在终端进入实际包含 `server.mjs` 的目录；如果解压后有多层文件夹，需要进入相应内层目录。
+4. 查看源码提供的运行要求；如果 `server.mjs` 可直接运行，可执行：
 
 ```bash
 node server.mjs
 ```
 
-默认使用端口 `23119`。需要使用其他端口时，可以显式指定（插件中必须同步配置相同端口）：
+是否需要先运行 `npm install`、是否需要特定环境变量，以**实际源码的依赖清单和说明**为准；当前归档尚未经独立复核，不应假定无需其他配置。
 
-```bash
-AI_BUTLER_CODEX_PORT=23120 node server.mjs
-```
-
-在 macOS 中检查是否监听：
+此前适配版使用的默认本地地址为 `http://127.0.0.1:23119`。可用以下命令检查 macOS 上是否有服务监听该端口：
 
 ```bash
 lsof -nP -iTCP:23119 -sTCP:LISTEN
 ```
 
-也可将命令中的 23119 替换为实际端口。适配服务仅应监听本机环回地址，不应开放到外网。
+如果服务使用了其他端口，应在 Zotero 插件设置里同步修改。桥接服务应限制在本机环回地址，切勿向公网暴露授权服务。
 
-## 配对及 Codex 登录
+## 配对与 Codex 登录
 
-1. 服务启动后，在本地适配服务目录找到 `codex-bridge-pairing.txt` 等安装说明指定的配对凭据文件。配对令牌仅保留在本机，不上传 GitHub、截图或聊天。
-2. 打开 Zotero AI Butler 设置，选择 Codex 供应商。
-3. 适配服务地址填 `http://127.0.0.1:23119`（使用其他端口时与服务配置一致）。
-4. 将本机生成的配对令牌填入插件的本地桥接令牌字段。
-5. 在插件中检查登录状态，按界面提示前往可信 ChatGPT/OpenAI 授权页登录。
-6. 取得模型列表，选择可用模型，执行纯文本连接测试。测试通过才开始发送文献内容。
+1. 打开 Zotero AI Butler 设置，选择 Codex 供应商。
+2. 将服务地址设置为 `http://127.0.0.1:23119`，或实际监听的本机地址和端口。
+3. 按桥接服务的本地说明获取当前实例的配对令牌，在插件中填写；**令牌只保留在本地**。
+4. 检查登录状态，并仅在可信的官方 ChatGPT/OpenAI 授权页面完成账号授权。
+5. 获取模型列表，选择可用模型后执行纯文本连接测试，确认服务正常后再处理实际文献。
 
 ## 常见问题
 
-- **连接失败**：先用 `lsof` 检查监听端口；确认地址与端口一致，以及本地防火墙没有阻断。
-- **要求配对**：检查是否填入与当前服务实例匹配的令牌；不要把令牌复制到公开渠道。
-- **未登录或模型列表为空**：确认官方账号授权状态及可用额度；无需也不应该在公开 Issue 中贴出登录信息。
-- **插件自动更新后功能消失**：原始测试安装包含上游自动更新地址。准备发布的候选 XPI 使用 [后处理脚本](../scripts/strip_upstream_update.py) 移除该入口；仍应先实测安装与更新行为。
+- **无法连接**：先检查桥接服务是否仍在运行，确认地址、端口和防火墙设置一致。
+- **提示配对失败**：核对插件中输入的配对令牌是否对应当前桥接实例；不要在 Issue 或截图中展示真实令牌。
+- **登录状态异常 / 模型列表为空**：确认账号权限、官方授权状态、可用额度和本地服务日志；分享日志前先删除私人信息。
+- **安装后功能未显示**：重启 Zotero，核对插件版本；如需排错，请只提供经过脱敏的错误信息。
+- **自动更新**：当前发布的 XPI 已移除上游的 `update_url`，见 [处理脚本](../scripts/strip_upstream_update.py)。但尚未完成 Zotero 内的自动更新行为实测。
 
-## 安全提示
+## 校验与风险说明
 
-适配服务能经本地授权与账号交互，使用者必须核验来源和访问权限。发布者应提供匹配的完整源码、构建说明和依赖锁文件。
+发布 XPI 的 SHA-256：
+
+```text
+dc4377ca4c5babeb168ff4959187b65832184a2a8d4e1c18a92b3c274c94a0a5
+```
+
+在 macOS 中可运行 `shasum -a 256 文件路径` 对下载文件计算哈希。哈希匹配只能确认文件与该 Release 附件一致，**不能证明软件安全**。
+
+本仓库已提供两个源码 ZIP，但尚未对其内容、依赖、敏感信息以及与本版 XPI 的可复现关系完成审核。详见 [维护者发布核对清单](PUBLISHING.md)。
