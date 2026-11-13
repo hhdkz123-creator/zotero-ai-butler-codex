@@ -1,0 +1,32 @@
+# Local credentials and account state — NEVER COMMIT
+.env
+.env.*
+!.env.example
+auth.json
+**/auth.json
+**/codex-bridge-pairing.txt
+**/*pairing*token*
+**/*credentials*
+**/*secret*
+**/*.pem
+**/*.key
+**/*.p12
+**/*.pfx
+**/.codex/
+**/.claude/
+# Local runtimes, logs and databases
+**/node_modules/
+**/.cache/
+**/coverage/
+**/tmp/
+**/temp/
+**/build/
+**/dist/
+**/*.log
+**/*.sqlite
+**/*.sqlite-*
+**/*.db
+.DS_Store
+# Release builds belong in GitHub Releases
+*.xpi
+*.zip
