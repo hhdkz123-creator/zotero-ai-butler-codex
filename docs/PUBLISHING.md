@@ -26,7 +26,7 @@ XPI 内的 `content/scripts/aiButler.js` 是打包后的 JavaScript，虽然包�
 https://github.com/steven-jianhao-li/zotero-AI-Butler/releases/download/release/update.json
 ```
 
-公开发布前从**修改版源工程的打包配置**中移除或改成自己维护的有效更新源，再重新构建 XPI；不要只改 README。修改后重新计算 SHA-256，并同步更新 README 与 Release Notes。
+已准备 [构建后处理脚本](../scripts/strip_upstream_update.py) 从现有 XPI 中移除这个上游地址，候选文件名为 `zotero-ai-butler-codex-5.1.2-beta.1.codex.1-no-upstream-update.xpi`，SHA-256 为 `dc4377ca4c5babeb168ff4959187b65832184a2a8d4e1c18a92b3c274c94a0a5`。仍应核对修改版源码和该脚本能够重现候选 XPI，并在 Zotero 实测安装、更新行为。
 
 ## GitHub 发布
 
@@ -35,8 +35,8 @@ https://github.com/steven-jianhao-li/zotero-AI-Butler/releases/download/release/
 3. 选择 `Choose a tag`，新建 `v5.1.2-beta.1.codex.1`，目标 `main`。
 4. Title 填 `Zotero AI Butler Codex 适配版 v5.1.2-beta.1.codex.1`。
 5. 将 `RELEASE_NOTES.md` 的内容复制到发布正文，并更新已完成事项。
-6. 上传经校验的 `.xpi`、修改版插件完整源码归档（如未随仓库提交），以及可依法分发的桥接服务源码归档（若桥接服务不在仓库中）。
+6. 上传经校验、且通过安装测试的 `-no-upstream-update.xpi`、修改版插件完整源码归档（如未随仓库提交），以及可依法分发的桥接服务源码归档（若桥接服务不在仓库中）。
 7. 勾选 `Set as a pre-release`，再选择 `Publish release`。
 8. 打开公开的 Release 页面，实际下载安装并检查 SHA-256、插件能否运行、桥接服务及文档链接是否可用。
 
-**在源码未就绪或更新配置未修正之前，不建议把当前 XPI 标记为正式发布。**
+**在完整源码未核查、候选 XPI 未经实际安装测试之前，不建议公开发布。**
