@@ -10,16 +10,16 @@ Zotero AI Butler 的非官方 Codex 适配版。
 - 包含 Codex 接口及登录相关逻辑，依赖本地 Codex 适配服务；插件安装包本身**不包含**适配服务。
 - 本地服务默认地址：`http://127.0.0.1:23119`
 - 清单声明支持 Zotero 7.0.0 至 10.x，尚未完成跨设备验证。
-- 清单保留原项目的自动更新地址，可能造成后续更新覆盖本修改版，公开发布前应解决。
+- 原始测试 XPI 保留了上游更新地址；本次候选包已按 [后处理脚本](scripts/strip_upstream_update.py) 移除。仍需在 Zotero 中实测安装与后续更新行为。
 
 ## 安装方式（正式发布后）
 
-从本仓库 Releases 下载 `zotero-ai-butler-codex-5.1.2-beta.1.codex.1.xpi`，使用 Zotero「工具」→「插件」安装。使用 Codex 功能前需安装可信的兼容本地适配服务并完成授权。
+从本仓库 Releases 下载 `zotero-ai-butler-codex-5.1.2-beta.1.codex.1-no-upstream-update.xpi`，使用 Zotero「工具」→「插件」安装。使用 Codex 功能前需安装可信的兼容本地适配服务并完成授权。
 
 ## 安装包 SHA-256
 
 ```text
-8a46fdf676aa7d4c573fd1a0baded4811074718a229081ccc2267a90c8f90cdb
+dc4377ca4c5babeb168ff4959187b65832184a2a8d4e1c18a92b3c274c94a0a5
 ```
 
 ## 版权与源码
